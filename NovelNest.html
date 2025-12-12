@@ -576,6 +576,7 @@
             font-size: 14px;
             transition: all 0.3s ease;
             background: white;
+            font-family: inherit;
         }
 
         .comment-input:focus {
@@ -871,16 +872,36 @@
         .group-card:hover {
             border-left-width: 8px;
         }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8bc34a 0%, #689f38 100%);
+            color: white;
+            border: none;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .fab:hover { transform: scale(1.1) rotate(90deg); }
     </style>
 </head>
 <body>
-    <!-- Floating decorative leaves -->
     <div class="floating-leaf" style="top: 10%; left: 5%; animation-delay: 0s;">🍃</div>
     <div class="floating-leaf" style="top: 60%; left: 90%; animation-delay: 3s;">🍂</div>
     <div class="floating-leaf" style="top: 80%; left: 10%; animation-delay: 6s;">🌿</div>
     <div class="floating-leaf" style="top: 30%; left: 85%; animation-delay: 9s;">🍃</div>
 
-    <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="logo">
             <span class="logo-leaf">🍃</span> NovelNest
@@ -889,9 +910,7 @@
         <div class="loading-text">Loading your literary haven...</div>
     </div>
 
-    <!-- Main App -->
     <div id="main-app">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-logo">🍃 NovelNest</div>
             <div class="nav-item active" data-section="home">
@@ -908,17 +927,15 @@
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Home Section -->
             <div class="content-section active" id="home">
                 <input type="text" class="search-bar" placeholder="🔍 Search for novels, posts, or users...">
                 <div class="filter-buttons">
-                    <button class="filter-btn active">📚 For You</button>
-                    <button class="filter-btn">✨ Following</button>
+                    <button class="filter-btn active" onclick="filterPosts('all', this)">📚 For You</button>
+                    <button class="filter-btn" onclick="filterPosts('following', this)">✨ Following</button>
                 </div>
                 
-                <div class="post-card" data-post="1">
+                <div class="post-card" data-post="1" onclick="openPostDetail(1)">
                     <div class="post-header">
                         <div class="post-author">
                             <div class="avatar">JD</div>
@@ -1019,7 +1036,6 @@
                 </div>
             </div>
 
-            <!-- Groups Section -->
             <div class="content-section" id="groups">
                 <input type="text" class="search-bar" placeholder="🔍 Search for novel groups...">
                 <div id="groups-list">
@@ -1043,10 +1059,10 @@
                 <div id="group-posts" style="display: none;">
                     <button class="submit-btn" style="margin-bottom: 20px;" onclick="showGroupsList()">← Back to Groups</button>
                     <h2 id="group-title" style="color: #2d5016; margin-bottom: 20px; font-size: 28px;"></h2>
+                    <div id="group-feed"></div>
                 </div>
             </div>
 
-            <!-- Notifications Section -->
             <div class="content-section" id="notifications">
                 <div class="notification-header">
                     <h2>🔔 Notifications</h2>
@@ -1107,7 +1123,6 @@
                 </div>
             </div>
 
-            <!-- Profile Section -->
             <div class="content-section" id="profile">
                 <button class="settings-btn" onclick="showSettings()">⚙️ Settings</button>
                 <div class="profile-header">
@@ -1294,10 +1309,11 @@
                     </div>
                 </div>
             </div>
+            
+            <button class="fab" onclick="openCreatePost()">+</button>
         </div>
     </div>
 
-    <!-- Popup for Post Details -->
     <div class="popup" id="post-popup">
         <div class="popup-content">
             <button class="close-btn" onclick="closePopup('post-popup')">×</button>
@@ -1305,18 +1321,35 @@
             <div style="margin-top: 20px;">
                 <h3 style="margin-bottom: 15px; color: #2d5016;">💬 Comments</h3>
                 <div id="comments-section"></div>
-                <textarea class="comment-input" placeholder="Write a comment..." id="comment-input"></textarea>
-                <button class="submit-btn" onclick="addComment()">Post Comment</button>
+                <button class="submit-btn" onclick="openAddCommentPopup()" style="width: 100%; margin-top: 15px;">Add Comment</button>
             </div>
         </div>
     </div>
+    
+    <div class="popup" id="add-comment-popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('add-comment-popup')">×</button>
+            <h3>Add a Comment</h3>
+            <textarea class="comment-input" id="popup-comment-text" placeholder="Type your comment..."></textarea>
+            <button class="submit-btn" onclick="submitPopupComment()">Submit</button>
+        </div>
+    </div>
+    
+    <div class="popup" id="create-post-popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('create-post-popup')">×</button>
+            <h2 style="color: #2d5016;">✨ New Post</h2>
+            <input type="text" class="search-bar" placeholder="Post Title" id="new-post-title" style="margin-top: 20px;">
+            <input type="text" class="search-bar" placeholder="Novel Name" id="new-post-novel">
+            <textarea class="comment-input" placeholder="What's on your mind?" id="new-post-desc" style="height: 150px;"></textarea>
+            <button class="submit-btn" onclick="submitNewPost()">Post</button>
+        </div>
+    </div>
 
-    <!-- Popup for Three Dots Menu -->
     <div class="popup" id="menu-popup">
         <div class="popup-menu" id="menu-content"></div>
     </div>
 
-    <!-- Popup for Settings -->
     <div class="popup" id="settings-popup">
         <div class="popup-content">
             <button class="close-btn" onclick="closePopup('settings-popup')">×</button>
@@ -1369,14 +1402,6 @@
             });
         });
 
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
         // Like button
         document.addEventListener('click', (e) => {
             if (e.target.closest('.like-btn')) {
@@ -1391,12 +1416,14 @@
                     btn.classList.add('liked');
                     countSpan.textContent = count + 1;
                 }
+                e.stopPropagation(); // prevent card click
             }
         });
 
         // Three dots menu
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('three-dots')) {
+                e.stopPropagation(); // prevent card click
                 const isOwner = e.target.dataset.owner === 'true';
                 const menuPopup = document.getElementById('menu-popup');
                 const menuContent = document.getElementById('menu-content');
@@ -1419,6 +1446,101 @@
             }
         });
 
+        // Create Post Logic
+        function openCreatePost() {
+            document.getElementById('create-post-popup').classList.add('active');
+        }
+
+        function submitNewPost() {
+            const title = document.getElementById('new-post-title').value;
+            const novel = document.getElementById('new-post-novel').value;
+            const desc = document.getElementById('new-post-desc').value;
+
+            if (title && novel && desc) {
+                alert(`Posted:\nTitle: ${title}\nNovel: ${novel}\nDescription: ${desc}`);
+                document.getElementById('new-post-title').value = '';
+                document.getElementById('new-post-novel').value = '';
+                document.getElementById('new-post-desc').value = '';
+                closePopup('create-post-popup');
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        // Post Detail Interaction
+        function openPostDetail(id) {
+            const popup = document.getElementById('post-popup');
+            const content = document.getElementById('popup-post-content');
+            const comments = document.getElementById('comments-section');
+            
+            // Hardcoded content for John Doe's post
+            if (id === 1) {
+                content.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">JD</div>
+                            <div>
+                                <div><strong>John Doe</strong></div>
+                                <div style="font-size: 12px; color: #999;">2 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-title">Omniscient Reader's Viewpoint is a masterpiece!</div>
+                    <p>Just finished ORV and I'm blown away. The meta-narrative and character development are incredible. Kim Dokja's journey from a reader to a protagonist is so well crafted. Anyone else feel the same?</p>
+                `;
+                
+                comments.innerHTML = `
+                    <div class="comment"><strong>Alice:</strong> Totally agree! The ending wrecked me.</div>
+                    <div class="comment"><strong>Bob:</strong> Best novel I've read in years.</div>
+                    <div class="comment"><strong>Charlie:</strong> I cried so much 😭</div>
+                    <div class="comment"><strong>Dave:</strong> Han Sooyoung is the real MVP though.</div>
+                    <div class="comment"><strong>Eve:</strong> Can't wait for the anime adaptation!</div>
+                `;
+                popup.classList.add('active');
+            }
+        }
+
+        // Add Comment Popup
+        function openAddCommentPopup() {
+            document.getElementById('add-comment-popup').classList.add('active');
+        }
+
+        function submitPopupComment() {
+            const text = document.getElementById('popup-comment-text').value;
+            if (text.trim()) {
+                const div = document.createElement('div');
+                div.className = 'comment';
+                div.innerHTML = `<strong>You:</strong> ${escapeHtml(text)}`;
+                document.getElementById('comments-section').appendChild(div);
+                document.getElementById('popup-comment-text').value = '';
+                closePopup('add-comment-popup');
+            } else {
+                alert('Please write a comment');
+            }
+        }
+
+        // Filter Logic
+        function filterPosts(type, btn) {
+            // Update active button
+            document.querySelectorAll('.filter-buttons .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const posts = document.querySelectorAll('#home .post-card');
+            
+            if (type === 'all') {
+                posts.forEach(post => post.style.display = 'block');
+            } else if (type === 'following') {
+                posts.forEach(post => {
+                    const author = post.querySelector('.post-author strong').textContent;
+                    if (author === 'John Doe' || author === 'Emma Lee') {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                });
+            }
+        }
+
         // Helper functions
         function closePopup(id) {
             const el = document.getElementById(id);
@@ -1427,9 +1549,7 @@
         }
 
         function editPost() {
-            const popup = document.getElementById('post-popup');
-            document.getElementById('popup-post-content').innerHTML = '<h3 style="color:#2d5016;">Edit post (not implemented)</h3>';
-            popup.classList.add('active');
+            alert('Edit post: not implemented in demo.');
         }
 
         function deletePost() {
@@ -1437,26 +1557,7 @@
         }
 
         function copyLink() {
-            const url = location.href;
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('Link copied to clipboard');
-                }).catch(() => {
-                    alert('Could not copy link');
-                });
-            } else {
-                try {
-                    const ta = document.createElement('textarea');
-                    ta.value = url;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(ta);
-                    alert('Link copied to clipboard');
-                } catch (e) {
-                    alert('Could not copy link');
-                }
-            }
+            alert('Link copied to clipboard');
         }
 
         function reportPost() {
@@ -1475,7 +1576,38 @@
 
         function showGroupPosts(groupKey) {
             const title = document.getElementById('group-title');
+            const feed = document.getElementById('group-feed');
             title.textContent = document.querySelector('.group-card[data-group="' + groupKey + '"] .post-title').textContent || groupKey;
+            
+            // Custom logic for ORV group
+            if (groupKey === 'orv') {
+                feed.innerHTML = `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-author"><div class="avatar">KD</div><div><strong>Kim Dokja</strong></div></div>
+                        </div>
+                        <div class="post-title">The ending...</div>
+                        <p>I still can't get over the ending. 51% vs 49%...</p>
+                    </div>
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-author"><div class="avatar">YJ</div><div><strong>Yoo Joonghyuk</strong></div></div>
+                        </div>
+                        <div class="post-title">Looking for a reader</div>
+                        <p>Has anyone seen a reader who wears a white coat? He keeps disappearing.</p>
+                    </div>
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-author"><div class="avatar">HS</div><div><strong>Han Sooyoung</strong></div></div>
+                        </div>
+                        <div class="post-title">New chapter update</div>
+                        <p>Just uploaded the latest chapter. Make sure to read it or I'll plagiarize your life.</p>
+                    </div>
+                `;
+            } else {
+                feed.innerHTML = '<p style="text-align:center; color:#666;">No posts loaded for this group in demo.</p>';
+            }
+
             document.getElementById('groups-list').style.display = 'none';
             document.getElementById('group-posts').style.display = '';
         }
@@ -1513,18 +1645,6 @@
                 btn.style.background = '';
                 btn.style.color = '';
             }
-        }
-
-        // Comments
-        function addComment() {
-            const ta = document.getElementById('comment-input');
-            const val = (ta && ta.value || '').trim();
-            if (!val) return alert('Please write a comment');
-            const div = document.createElement('div');
-            div.className = 'comment';
-            div.innerHTML = '<div style="font-weight:600; margin-bottom:6px;">You</div><div>' + escapeHtml(val) + '</div>';
-            document.getElementById('comments-section').appendChild(div);
-            ta.value = '';
         }
 
         function escapeHtml(s) {
