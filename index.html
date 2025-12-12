@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovelNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="floating-leaf" style="top: 10%; left: 5%; animation-delay: 0s;">🍃</div>
+    <div class="floating-leaf" style="top: 60%; left: 90%; animation-delay: 3s;">🍂</div>
+    <div class="floating-leaf" style="top: 80%; left: 10%; animation-delay: 6s;">🌿</div>
+    <div class="floating-leaf" style="top: 30%; left: 85%; animation-delay: 9s;">🍃</div>
+
+    <div id="loading-screen">
+        <div class="logo">
+            <span class="logo-leaf">🍃</span> NovelNest
+        </div>
+        <div class="loader"></div>
+        <div class="loading-text">Loading your literary haven...</div>
+    </div>
+
+    <div id="main-app">
+        <div class="sidebar">
+            <div class="sidebar-logo">🍃 NovelNest</div>
+            <div class="nav-item active" data-section="home">
+                <span>🏠</span> Home
+            </div>
+            <div class="nav-item" data-section="groups">
+                <span>👥</span> Groups
+            </div>
+            <div class="nav-item" data-section="notifications">
+                <span>🔔</span> Notifications
+            </div>
+            <div class="nav-item" data-section="profile">
+                <span>👤</span> Profile
+            </div>
+        </div>
+
+        <div class="main-content">
+            
+            <div class="content-section active" id="home">
+                <input type="text" class="search-bar" placeholder="🔍 Search for novels, posts, or users...">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterPosts('all', this)">📚 For You</button>
+                    <button class="filter-btn" onclick="filterPosts('following', this)">✨ Following</button>
+                </div>
+                
+                <div class="post-card" data-post="1" onclick="openPostDetail(1)">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">JD</div>
+                            <div>
+                                <div><strong>John Doe</strong></div>
+                                <div style="font-size: 12px; color: #999;">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="three-dots" data-owner="false">⋮</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-title">Omniscient Reader's Viewpoint is a masterpiece!</div>
+                        <p>Just finished ORV and I'm blown away. The meta-narrative and character development are incredible. Kim Dokja's journey from a reader to a protagonist is so well crafted. Anyone else feel the same?</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn" data-likes="234">
+                            <span>❤️</span> <span class="like-count">234</span>
+                        </button>
+                        <button class="action-btn comment-btn">
+                            <span>💬</span> 5
+                        </button>
+                    </div>
+                </div>
+
+                <div class="post-card" data-post="2">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">SA</div>
+                            <div>
+                                <div><strong>Sarah Allen</strong></div>
+                                <div style="font-size: 12px; color: #999;">5 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="three-dots" data-owner="true">⋮</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-title">Unpopular opinion: Hamlet is overrated</div>
+                        <p>I know this is controversial, but I think Hamlet gets too much credit. Yes, the soliloquies are beautiful, but the plot drags. Macbeth is a far superior tragedy. Change my mind!</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn" data-likes="89">
+                            <span>❤️</span> <span class="like-count">89</span>
+                        </button>
+                        <button class="action-btn comment-btn">
+                            <span>💬</span> 67
+                        </button>
+                    </div>
+                </div>
+
+                <div class="post-card" data-post="3">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">MK</div>
+                            <div>
+                                <div><strong>Mike Kim</strong></div>
+                                <div style="font-size: 12px; color: #999;">1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="three-dots" data-owner="false">⋮</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-title">The Great Gatsby's symbolism is unmatched</div>
+                        <p>Fitzgerald's use of the green light as a symbol for hope and the American Dream is pure genius. Every time I reread it, I discover something new. What's your favorite symbol in literature?</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn" data-likes="156">
+                            <span>❤️</span> <span class="like-count">156</span>
+                        </button>
+                        <button class="action-btn comment-btn">
+                            <span>💬</span> 34
+                        </button>
+                    </div>
+                </div>
+
+                <div class="post-card" data-post="4">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">EL</div>
+                            <div>
+                                <div><strong>Emma Lee</strong></div>
+                                <div style="font-size: 12px; color: #999;">2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="three-dots" data-owner="false">⋮</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-title">Pride and Prejudice never gets old</div>
+                        <p>I've read this book at least 10 times and it still makes me smile. Elizabeth Bennet is the queen of witty comebacks. The slow-burn romance with Darcy is perfection. Jane Austen was ahead of her time!</p>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn like-btn" data-likes="312">
+                            <span>❤️</span> <span class="like-count">312</span>
+                        </button>
+                        <button class="action-btn comment-btn">
+                            <span>💬</span> 89
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="groups">
+                <input type="text" class="search-bar" placeholder="🔍 Search for novel groups...">
+                <div id="groups-list">
+                    <div class="group-card" data-group="orv">
+                        <div class="post-title">📖 Omniscient Reader's Viewpoint</div>
+                        <p style="color: #666;">15.2K members • 234 posts today</p>
+                    </div>
+                    <div class="group-card" data-group="shakespeare">
+                        <div class="post-title">🎭 Shakespeare Classics</div>
+                        <p style="color: #666;">28.5K members • 156 posts today</p>
+                    </div>
+                    <div class="group-card" data-group="gatsby">
+                        <div class="post-title">🍾 The Great Gatsby Fans</div>
+                        <p style="color: #666;">12.8K members • 89 posts today</p>
+                    </div>
+                    <div class="group-card" data-group="austen">
+                        <div class="post-title">💕 Jane Austen Society</div>
+                        <p style="color: #666;">34.1K members • 201 posts today</p>
+                    </div>
+                </div>
+                <div id="group-posts" style="display: none;">
+                    <button class="submit-btn" style="margin-bottom: 20px;" onclick="showGroupsList()">← Back to Groups</button>
+                    <h2 id="group-title" style="color: #2d5016; margin-bottom: 20px; font-size: 28px;"></h2>
+                    <div id="group-feed"></div>
+                </div>
+            </div>
+
+            <div class="content-section" id="notifications">
+                <div class="notification-header">
+                    <h2>🔔 Notifications</h2>
+                    <div class="notif-actions">
+                        <button class="notif-btn" onclick="markAllRead()">✓ Mark all as read</button>
+                        <button class="notif-btn" onclick="deleteAllNotifications()">🗑️ Delete all</button>
+                    </div>
+                </div>
+
+                <div class="notification-card unread">
+                    <div class="post-author">
+                        <div class="avatar">JD</div>
+                        <div style="flex: 1;">
+                            <div><strong>John Doe</strong> liked your post</div>
+                            <div style="font-size: 12px; color: #999;">5 minutes ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-card unread">
+                    <div class="post-author">
+                        <div class="avatar">SA</div>
+                        <div style="flex: 1;">
+                            <div><strong>Sarah Allen</strong> commented on your post</div>
+                            <div style="font-size: 12px; color: #999;">1 hour ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-card">
+                    <div class="post-author">
+                        <div class="avatar">MK</div>
+                        <div style="flex: 1;">
+                            <div><strong>Mike Kim</strong> started following you</div>
+                            <div style="font-size: 12px; color: #999;">3 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-card">
+                    <div class="post-author">
+                        <div class="avatar">EL</div>
+                        <div style="flex: 1;">
+                            <div><strong>Emma Lee</strong> mentioned you in a comment</div>
+                            <div style="font-size: 12px; color: #999;">1 day ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-card">
+                    <div class="post-author">
+                        <div class="avatar">RL</div>
+                        <div style="flex: 1;">
+                            <div><strong>Robert Lee</strong> shared your post</div>
+                            <div style="font-size: 12px; color: #999;">2 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="profile">
+                <button class="settings-btn" onclick="showSettings()">⚙️ Settings</button>
+                <div class="profile-header">
+                    <div class="profile-avatar">ME</div>
+                    <h2>Marc Vergel Niepes</h2>
+                    <p style="opacity: 0.9;">@marcomfy</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-number">2</div>
+                            <div style="opacity: 0.9;">Posts</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" id="followers-count">5</div>
+                            <div style="opacity: 0.9;">Followers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" id="following-count">5</div>
+                            <div style="opacity: 0.9;">Following</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active" onclick="showProfileTab('posts')">📝 Posts</button>
+                    <button class="tab" onclick="showProfileTab('followers')">👥 Followers</button>
+                    <button class="tab" onclick="showProfileTab('following')">✨ Following</button>
+                </div>
+
+                <div id="profile-posts" class="profile-tab-content">
+                    <div class="post-card" data-post="my1">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="avatar">MV</div>
+                                <div>
+                                    <div><strong>MV</strong></div>
+                                    <div style="font-size: 12px; color: #999;">3 days ago</div>
+                                </div>
+                            </div>
+                            <div class="three-dots" data-owner="true">⋮</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-title">My thoughts on modern literature</div>
+                            <p>I think we're living in a golden age of fantasy novels. The world-building and character complexity in modern works rivals the classics!</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn like-btn" data-likes="89">
+                                <span>❤️</span> <span class="like-count">89</span>
+                            </button>
+                            <button class="action-btn comment-btn">
+                                <span>💬</span> 23
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="post-card" data-post="my2">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="avatar">ME</div>
+                                <div>
+                                    <div><strong>Me</strong></div>
+                                    <div style="font-size: 12px; color: #999;">1 week ago</div>
+                                </div>
+                            </div>
+                            <div class="three-dots" data-owner="true">⋮</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-title">Just finished reading...</div>
+                            <p>Completed my 50th book this year! Feeling accomplished. What's your reading goal?</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn like-btn" data-likes="156">
+                                <span>❤️</span> <span class="like-count">156</span>
+                            </button>
+                            <button class="action-btn comment-btn">
+                                <span>💬</span> 5
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                            <div id="profile-followers" class="profile-tab-content" style="display: none;">
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">JD</div>
+                        <div>
+                            <div><strong>John Doe</strong></div>
+                            <div style="font-size: 12px; color: #999;">@johndoe</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">SA</div>
+                        <div>
+                            <div><strong>Sarah Allen</strong></div>
+                            <div style="font-size: 12px; color: #999;">@sarahallen</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">MK</div>
+                        <div>
+                            <div><strong>Mike Kim</strong></div>
+                            <div style="font-size: 12px; color: #999;">@mikekim</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">EL</div>
+                        <div>
+                            <div><strong>Emma Lee</strong></div>
+                            <div style="font-size: 12px; color: #999;">@emmalee</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">RL</div>
+                        <div>
+                            <div><strong>Robert Lee</strong></div>
+                            <div style="font-size: 12px; color: #999;">@robertlee</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">JC</div>
+                        <div>
+                            <div><strong>John Cena</strong></div>
+                            <div style="font-size: 12px; color: #999;">@johncena</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">FD</div>
+                        <div>
+                            <div><strong>Fleur Dyss</strong></div>
+                            <div style="font-size: 12px; color: #999;">@fleurdyss</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">JM</div>
+                        <div>
+                            <div><strong>Jiji Mon</strong></div>
+                            <div style="font-size: 12px; color: #999;">@jijimon</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">IN</div>
+                        <div>
+                            <div><strong>Imbure Null</strong></div>
+                            <div style="font-size: 12px; color: #999;">@imburenull</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+            </div>
+
+            <div id="profile-following" class="profile-tab-content" style="display: none;">
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">JD</div>
+                        <div>
+                            <div><strong>John Doe</strong></div>
+                            <div style="font-size: 12px; color: #999;">@johndoe</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">CD</div>
+                        <div>
+                            <div><strong>Carol Davis</strong></div>
+                            <div style="font-size: 12px; color: #999;">@caroldavis</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">DM</div>
+                        <div>
+                            <div><strong>David Miller</strong></div>
+                            <div style="font-size: 12px; color: #999;">@davidmiller</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">FT</div>
+                        <div>
+                            <div><strong>Fiona Taylor</strong></div>
+                            <div style="font-size: 12px; color: #999;">@fionataylor</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">KJ</div>
+                        <div>
+                            <div><strong>Kyle Jordan</strong></div>
+                            <div style="font-size: 12px; color: #999;">@kylejordan</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">MH</div>
+                        <div>
+                            <div><strong>Misty Her</strong></div>
+                            <div style="font-size: 12px; color: #999;">@mistyher</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">MW</div>
+                        <div>
+                            <div><strong>Morning Woode</strong></div>
+                            <div style="font-size: 12px; color: #999;">@morningwoode</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+                <div class="user-card">
+                    <div class="post-author">
+                        <div class="avatar">EL</div>
+                        <div>
+                            <div><strong>Emma Lee</strong></div>
+                            <div style="font-size: 12px; color: #999;">@emmalee</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn following" onclick="toggleFollow(this)">Following</button>
+                </div>
+            </div>
+            </div>
+            
+            <button class="fab" onclick="openCreatePost()">+</button>
+        </div>
+    </div>
+
+    <div class="popup" id="post-popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('post-popup')">×</button>
+            <div id="popup-post-content"></div>
+            <div style="margin-top: 20px;">
+                <h3 style="margin-bottom: 15px; color: #2d5016;">💬 Comments</h3>
+                <div id="comments-section"></div>
+                <button class="submit-btn" onclick="openAddCommentPopup()" style="width: 100%; margin-top: 15px;">Add Comment</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup" id="add-comment-popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('add-comment-popup')">×</button>
+            <h3>Add a Comment</h3>
+            <textarea class="comment-input" id="popup-comment-text" placeholder="Type your comment..."></textarea>
+            <button class="submit-btn" onclick="submitPopupComment()">Submit</button>
+        </div>
+    </div>
+    
+    <div class="popup" id="create-post-popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('create-post-popup')">×</button>
+            <h2 style="color: #2d5016;">✨ New Post</h2>
+            <input type="text" class="search-bar" placeholder="Post Title" id="new-post-title" style="margin-top: 20px;">
+            <input type="text" class="search-bar" placeholder="Novel Name" id="new-post-novel">
+            <textarea class="comment-input" placeholder="What's on your mind?" id="new-post-desc" style="height: 150px;"></textarea>
+            <button class="submit-btn" onclick="submitNewPost()">Post</button>
+        </div>
+    </div>
+
+    <div class="popup" id="menu-popup">
+        <div class="popup-menu" id="menu-content"></div>
+    </div>
+
+    <div class="popup" id="settings-popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('settings-popup')">×</button>
+            <h2 style="margin-bottom: 25px; color: #2d5016;">⚙️ Settings</h2>
+            <div class="settings-item">
+                <strong>🔐 Account Settings</strong>
+                <p>Manage your account information</p>
+            </div>
+            <div class="settings-item">
+                <strong>🔒 Privacy & Security</strong>
+                <p>Control who can see your content</p>
+            </div>
+            <div class="settings-item">
+                <strong>🔔 Notifications</strong>
+                <p>Manage notification preferences</p>
+            </div>
+            <div class="settings-item">
+                <strong>🎨 Appearance</strong>
+                <p>Customize theme and display</p>
+            </div>
+            <div class="settings-item">
+                <strong>🚫 Blocked Users</strong>
+                <p>Manage blocked accounts</p>
+            </div>
+            <div class="settings-item">
+                <strong>❓ Help & Support</strong>
+                <p>Get help and contact support</p>
+            </div>
+            <div class="settings-item logout">
+                <strong>🚪 Log Out</strong>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
